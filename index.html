@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi tienda</title>
+  <style>
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      background-color: #fff5f8;
+      color: #4a2c35;
+      padding: 20px;
+      margin: 0;
+      text-align: center;
+    }
+
+    h1 {
+      color: #c2185b;
+      margin-bottom: 8px;
+    }
+
+    .slogan {
+      color: #8e5a68;
+      font-size: 17px;
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+
+    /* Beneficios de la tienda */
+
+    .beneficios {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+
+      background-color: #d81b60;
+      color: white;
+
+      padding: 14px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+    }
+
+    .beneficios span {
+      font-size: 14px;
+    }
+
+    /* Catálogo */
+
+    #productos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .producto {
+      border: 1px solid #f3c1d3;
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 10px;
+      width: 220px;
+      vertical-align: top;
+      box-shadow: 0 4px 12px rgba(194, 24, 91, 0.10);
+    }
+
+    .producto img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .producto h3 {
+      margin-bottom: 8px;
+      color: #ad1457;
+    }
+
+    .descripcion {
+      font-size: 14px;
+      color: #8e5a68;
+      min-height: 42px;
+    }
+
+    .precio {
+      font-size: 18px;
+      font-weight: bold;
+      color: #c2185b;
+    }
+
+    /* Botones */
+
+    .producto button {
+      background-color: #ec407a;
+      border: none;
+      color: white;
+      padding: 9px 12px;
+      margin-top: 5px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .producto button:hover {
+      background-color: #d81b60;
+    }
+
+    /* Carrito */
+
+    .carrito {
+      margin-top: 35px;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #f3c1d3;
+      border-radius: 12px;
+      text-align: left;
+      display: inline-block;
+      min-width: 320px;
+      box-shadow: 0 4px 15px rgba(194, 24, 91, 0.10);
+    }
+
+    .carrito h2 {
+      margin-top: 0;
+      color: #c2185b;
+    }
+
+    #lista-carrito {
+      padding-left: 20px;
+    }
+
+    #lista-carrito li {
+      margin-bottom: 8px;
+    }
+
+    .resumen {
+      border-top: 1px solid #f3c1d3;
+      margin-top: 15px;
+      padding-top: 10px;
+    }
+
+    .total {
+      font-size: 19px;
+      color: #c2185b;
+      font-weight: bold;
+    }
+
+    /* Botón vaciar */
+
+    .vaciar {
+      background-color: #ad1457;
+      border: none;
+      color: white;
+      padding: 9px 12px;
+      margin-top: 10px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .vaciar:hover {
+      background-color: #880e4f;
+    }
+
+    /* Botón finalizar */
+
+    .finalizar {
+      background-color: #e91e63;
+      border: none;
+      color: white;
+      padding: 9px 12px;
+      margin-top: 10px;
+      margin-left: 5px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .finalizar:hover {
+      background-color: #c2185b;
+    }
+
+    .vaciar:hover,
+    .finalizar:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍽️ Ecommerce Make up - Danna Rincon</h1>
+
+  <p class="slogan">
+    Las mejores marcas de maquillaje a solo un click 
+  </p>
+
+  <div class="beneficios">
+    <span>🚚 Envíos en Bogotá</span>
+    <span>🔒 Compra segura</span>
+    <span>📦 Seguimiento de pedido</span>
+  </div>
+
+  <div id="productos"></div>
+
+  <div class="carrito">
+    <h2>🧾 Carrito de Compras</h2>
+
+    <ul id="lista-carrito"></ul>
+
+    <div class="resumen">
+      <p>
+        Envío: <strong>Gratis</strong>
+      </p>
+
+      <p class="total">
+        Total: $<span id="total">0</span>
+      </p>
+    </div>
+
+    <button class="vaciar" onclick="vaciarCarrito()">
+      🧼 Vaciar Carrito
+    </button>
+
+    <button class="finalizar" onclick="finalizarCompra()">
+      ✅ Finalizar Compra
+    </button>
+  </div>
+
+  <script>
+    const productos = [
+      {
+        id: 1,
+        nombre: "TOO FACED Rubor cloud",
+        descripcion: "Un rubor en polvo aterciopelado y ultra suave que mantiene tus mejillas perfectamente coloradas durante todo el día. ",
+        precio: 25000,
+        imagen: "https://blushbar.vtexassets.com/arquivos/ids/231352-1200-1200?v=639155852925400000&width=1200&height=1200&aspect=true"
+      },
+      {
+        id: 2,
+        nombre: "TOO FACED Bronceador en Polvo Chocolate",
+        descripcion: "Un bronceador en polvo de acabado mate sedoso que aporta calidez y dimensión al rostro con un efecto bronceado natural.",
+        precio: 18000,
+        imagen: "https://blushbar.vtexassets.com/arquivos/ids/231725-1200-1200?v=639156314975470000&width=1200&height=1200&aspect=true"
+      },
+      {
+        id: 3,
+        nombre: "HUDA BEUTY Polvos Sueltos Easy Bake Loose Baking and Setting Powder - Cherry Blossom",
+        descripcion: "Un polvo fijador sedoso y ligeramente pigmentado, diseñado para lograr un maquillaje impecable y duradero. Su fórmula de larga duración, no comedogénica y libre de efecto flash, se difumina perfectamente en la piel con un acabado mate que controla el brillo durante todo el día.",
+        precio: 30000,
+        imagen: "https://blushbar.vtexassets.com/arquivos/ids/233477-1200-1200?v=639179605551800000&width=1200&height=1200&aspect=true"
+      },
+      {
+        id: 4,
+        nombre: "TOO FACED Pestañina Better Than Sex Mascara Chocolate",
+        descripcion: "Una pestañina marrón que da volumen y longitud en una sola pasada. La fórmula icónica que te encanta de la Better Than Sex, ahora en un profundo y rico tono marrón chocolate. ",
+        precio: 18000,
+        imagen: "https://blushbar.vtexassets.com/arquivos/ids/231300-1200-1200?v=639155825584470000&width=1200&height=1200&aspect=true"
+      },
+      {
+        id: 5,
+        nombre: "CAROLINA HERRERA Perfume Para Mujer La Bomba Eau de Parfum - 80ml",
+        descripcion: "Un perfume explosivo que celebra la pasión, la alegría y el espíritu libre de la mujer Herrera con un frasco en forma de mariposa. Este perfume hace una invitación a desplegar tus alas y ser tú misma con absoluta libertad.",
+        precio: 22000,
+        imagen: "https://blushbar.vtexassets.com/arquivos/ids/222887-1200-1200?v=638925190688830000&width=1200&height=1200&aspect=true"
+      }
+    ];
+
+
+    /* ==============================
+       CARRITO
+    ================================ */
+
+    const carrito = [];
+
+    const contenedorProductos = document.getElementById("productos");
+    const listaCarrito = document.getElementById("lista-carrito");
+    const totalCarrito = document.getElementById("total");
+
+
+    /* ==============================
+       MOSTRAR PRODUCTOS
+    ================================ */
+
+    function mostrarProductos() {
+
+      contenedorProductos.innerHTML = "";
+
+      productos.forEach(prod => {
+
+        const div = document.createElement("div");
+
+        div.className = "producto";
+
+        div.innerHTML = `
+          <img src="${prod.imagen}" alt="${prod.nombre}">
+
+          <h3>${prod.nombre}</h3>
+
+          <p class="descripcion">
+            ${prod.descripcion}
+          </p>
+
+          <p class="precio">
+            ${prod.precio.toLocaleString("es-CO", {
+              style: "currency",
+              currency: "COP",
+              minimumFractionDigits: 0
+            })}
+          </p>
+
+          <button onclick="agregarAlCarrito(${prod.id})">
+            Agregar al carrito
+          </button>
+        `;
+
+        contenedorProductos.appendChild(div);
+
+      });
+
+    }
+
+
+    /* ==============================
+       AGREGAR AL CARRITO
+    ================================ */
+
+    function agregarAlCarrito(id) {
+
+      const productoExistente =
+        carrito.find(p => p.id === id);
+
+      if (productoExistente) {
+
+        productoExistente.cantidad++;
+
+      } else {
+
+        const producto =
+          productos.find(p => p.id === id);
+
+        carrito.push({
+          ...producto,
+          cantidad: 1
+        });
+
+      }
+
+      actualizarCarrito();
+
+    }
+
+
+    /* ==============================
+       ACTUALIZAR CARRITO
+    ================================ */
+
+    function actualizarCarrito() {
+
+      listaCarrito.innerHTML = "";
+
+      let total = 0;
+      let totalItems = 0;
+
+      carrito.forEach(item => {
+
+        const li =
+          document.createElement("li");
+
+        const subtotal =
+          item.precio * item.cantidad;
+
+        li.textContent =
+          `${item.nombre} x${item.cantidad} — ` +
+          subtotal.toLocaleString("es-CO", {
+            style: "currency",
+            currency: "COP",
+            minimumFractionDigits: 0
+          });
+
+        listaCarrito.appendChild(li);
+
+        total += subtotal;
+        totalItems += item.cantidad;
+
+      });
+
+      totalCarrito.textContent =
+        total.toLocaleString("es-CO");
+
+      actualizarTituloCarrito(totalItems);
+
+    }
+
+
+    /* ==============================
+       CONTADOR DEL CARRITO
+    ================================ */
+
+    function actualizarTituloCarrito(cantidad) {
+
+      const titulo =
+        document.querySelector(".carrito h2");
+
+      titulo.textContent =
+        `🧾 Carrito de Compras (${cantidad})`;
+
+    }
+
+
+    /* ==============================
+       VACIAR CARRITO
+    ================================ */
+
+    function vaciarCarrito() {
+
+      if (carrito.length === 0) {
+
+        alert("🛒 El carrito ya está vacío.");
+
+        return;
+
+      }
+
+      if (
+        confirm(
+          "¿Estás seguro de que quieres vaciar el carrito?"
+        )
+      ) {
+
+        carrito.length = 0;
+
+        actualizarCarrito();
+
+      }
+
+    }
+
+
+    /* ==============================
+       FINALIZAR COMPRA
+    ================================ */
+
+    function finalizarCompra() {
+
+      if (carrito.length === 0) {
+
+        alert(
+          "🛒 Tu carrito está vacío. Agrega productos antes de finalizar la compra."
+        );
+
+        return;
+
+      }
+
+      alert(
+        "🎉 ¡Pedido simulado confirmado!\n\n" +
+        "En un eCommerce real, ahora entrarían en acción " +
+        "el backend, la pasarela de pago y la logística."
+      );
+
+      carrito.length = 0;
+
+      actualizarCarrito();
+
+    }
+
+
+    /* ==============================
+       INICIAR TIENDA
+    ================================ */
+
+    mostrarProductos();
+  </script>
+</body>
+</html>
